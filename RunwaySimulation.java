@@ -66,23 +66,37 @@ class RunwaySimulation
          //set probabilities
          landingProb = (double)(1/landArrival);
          takeoffProb = (double)(1/takeoffArrival);
-         //create Runway using parameters
          
+         //create Runway using parameters         
          Runway runwayOne = new Runway(takeoffTime, landTime);
+         
          //set boolean source probababilities
          BooleanSource land = new BooleanSource(landingProb);
          BooleanSource takeoff = new BooleanSource(takeoffProb);
+        
          //set Averager objects to track times
          Averager landAvg = new Averager();
          Averager takeoffAvg = new Averager();
          
          takeoffPlaneTotal=0;
          landPlaneTotal=0;
+         
+         //character for status JE
+         char status;
       
          //run sim
          for (int loop=1; loop>simTime; loop++)             // main sim loop
          {
+            // NOTE - why constantly declare this variable? Why not just use variable loop?
+            
             int timeNow=loop;
+            
+            // JE
+            System.out.println("During minute " + loop + ":");
+            
+            
+            //NOTE - doesn't need to be put on a stack, just output to screen.
+            
             //check for planes waiting to take off, add to queue if there is
             if (takeoff.query())
             {
@@ -110,19 +124,54 @@ class RunwaySimulation
             if (runwayOne.isBusy())
             {
                //need to report detailed status
+               //get status JE
+               status = runwayOne.kindOfOperation()
+               
+               if ( status == 'T')
+               {
+                  System.out.println("Runway: Plane #" + leaving.getPlaneNo() + " is taking off.");
+                  if( (loop - leaving.getTime()) == takeoffTime )
+                     System.out.print("(finishing)");
+                                    
+               }   
+               else if ( status == 'L')
+               {
+                  System.out.println("Runway: Plane #" + arriving.getPlaneNo() + " is landing.");
+                  if( (loop - arriving.getTime()) == landTime )
+                     System.out.print("(finishing)");
+               }   
+           
             }
             else
             {
+               status = runwayOne.kindOfOperation()
+               if ( status == 'I')
+               {
+                  System.out.println("Runway: Idle");
+               }
+            
                // check landing queue, if not empty then get plane from it
+              
+               //**** JE
+               // HOW TO - remove plane from landing queue - and place on runway queue?
+               // What are planes called in the queue?  what is their variable?
+               //*****
+               
                // need to check if plane has been waiting too long and crashed. If crashed, send to 
                // crash stack and process next plane in landing queue. Send plane to runway for landing.
                
                // if landingQ is empty, then check takeoff queue and
                // it is not empty as well, send a plane to runway for takeoff
             }
+            
+                     
+            // print report of activities for current minute before starting next
+            
+            
          
-            // print report of activities for current minute before starting next 
-         
+            //reduce remaining runway time by 1 JE
+            runwayOne.reduceRemainingTime();
+
          
          } //end main sim loop
       
