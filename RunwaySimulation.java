@@ -18,13 +18,12 @@ import java.util.*;
 class RunwaySimulation 
 {
 
-
    public static void main(String [] args)
    {
       //create items/variables needed for sim
       boolean done=false;
       boolean pCrashed=false;
-      int simTime, takeoffTime,landTime, landArrival, takeoffArrival, maxWait;
+      int simTime, takeoffTime,landTime, landArrival, takeoffArrival, maxWait,totalCrash;
       int takeoffPlaneTotal,landPlaneTotal;
       double landingProb,takeoffProb;
       Scanner scan = new Scanner(System.in);
@@ -78,7 +77,7 @@ class RunwaySimulation
          //set boolean source probababilities
          BooleanSource land = new BooleanSource(landingProb);
          BooleanSource takeoff = new BooleanSource(takeoffProb);
-         System.out.println(landingProb + " " + takeoffProb);
+         
          //set Averager objects to track times
          Averager landAvg = new Averager();
          Averager takeoffAvg = new Averager();
@@ -132,7 +131,7 @@ class RunwaySimulation
                   {
                      arriving=(Plane)landingQ.remove();
                      landAvg.addNumber( (double)(loop-arriving.getTime()) );
-                     if (arriving.getTime() >= (loop-maxWait))
+                     if ((arriving.getTime()-loop) > maxWait)
                      {
                         crash="Plane # " + Integer.toString(arriving.getPlaneNo())+ " crashed at time : " + Integer.toString(loop);
                         crashStack.push(crash);
@@ -189,25 +188,28 @@ class RunwaySimulation
             }               
          
             // print report of activities for current minute before starting next 
-            System.out.println("During minute " + Integer.toString(loop) + " :");
-            while (!eventStack.isEmpty())      // prints all events for current "minute", stack will be empty for next minute events
-            {
-               System.out.println("\t" + eventStack.pop());
-            }
+            //System.out.println("During minute " + Integer.toString(loop) + " :");
+            //while (!eventStack.isEmpty())      // prints all events for current "minute", stack will be empty for next minute events
+            //{
+            //   System.out.println("\t" + eventStack.pop());
+            //}
             
             //reduce remaining runway time by 1 JE
             runwayOne.reduceRemainingTime();
             
          } //end main sim loop
       
-      
-      
+         totalCrash=crashStack.size();
+         while (!crashStack.isEmpty())
+         {
+            System.out.println("\t" + crashStack.pop());
+         }
          
          //generate report after sim ends JE
          
          System.out.println("Number of planes that came to runway for takeoff: " + takeoffPlaneTotal );
          System.out.println("Number of planes that came to runway for landing: " + landPlaneTotal );
-         System.out.println("Number of planes that crashed: " + crashStack.size() );
+         System.out.println("Number of planes that crashed: " + totalCrash );
          System.out.println("Average time waiting in takeoff queue: " + takeoffAvg.average());
          System.out.println("Average time waiting in landing queue:  " + landAvg.average());     
          
