@@ -87,7 +87,7 @@ class RunwaySimulation
          //run sim
          for (int loop=1; loop>simTime; loop++)             // main sim loop
          {
-            // NOTE - why constantly declare this variable? Why not just use variable loop?
+            // NOTE - rename loop to timeNow?
             
             int timeNow=loop;
             
@@ -151,14 +151,28 @@ class RunwaySimulation
                }
             
                // check landing queue, if not empty then get plane from it
-              
-               //**** JE
+               if (!landingQ.isEmpty())
+               {
+                    //get one plane from Queue, add it to runway status = L
+                       //**** JE
                // HOW TO - remove plane from landing queue - and place on runway queue?
                // What are planes called in the queue?  what is their variable?
                //*****
-               
+                    //do we just create a new plane variable to hold removed plane?
+                    Plane landing = landingQ.remove();
+                    runwayOne.startUsingRunway('L');     
+              
+              
                // need to check if plane has been waiting too long and crashed. If crashed, send to 
                // crash stack and process next plane in landing queue. Send plane to runway for landing.
+               
+               //to calculate whether plane has crashed JE
+                  if ( (loop - arriving.getTime()) > landTime)
+                  // remove one from arriving and add to 
+                  Plane crashing = landingQ.remove();
+                  crashStack.push(crashing);
+               
+               
                
                // if landingQ is empty, then check takeoff queue and
                // it is not empty as well, send a plane to runway for takeoff
@@ -177,8 +191,13 @@ class RunwaySimulation
       
       
       
-         //generate report after sim ends
+         //generate report after sim ends JE
          
+         System.out.println("Number of planes that came to runway for takeoff: " + leaving.getPlaneCount() );
+         System.out.println("Number of planes that came to runway for landing: " + arriving.getPlaneCount() );
+         System.out.println("Number of planes that crashed: " + );
+         System.out.println("Average time waiting in takeoff queue: "+ );
+         System.out.println("Average time waiting in landing queue:  "+ );     
          
          
          done=runAgain();
