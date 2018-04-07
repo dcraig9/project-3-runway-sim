@@ -63,20 +63,22 @@ class RunwaySimulation
          System.out.print("Average time between planes arriving for take off : ");
          takeoffArrival=getInt();
          System.out.println();
+         
          System.out.print("Maximum time before landing plane runs out of fuel : ");
          maxWait=getInt();
          System.out.println();
          
          
          //set probabilities
-         landingProb = (double)(1/landArrival);
-         takeoffProb = (double)(1/takeoffArrival);
+         landingProb = (double)1/landArrival;
+         takeoffProb = (double)1/takeoffArrival;
          //create Runway using parameters
          
          Runway runwayOne = new Runway(takeoffTime, landTime);
          //set boolean source probababilities
          BooleanSource land = new BooleanSource(landingProb);
          BooleanSource takeoff = new BooleanSource(takeoffProb);
+         System.out.println(landingProb + " " + takeoffProb);
          //set Averager objects to track times
          Averager landAvg = new Averager();
          Averager takeoffAvg = new Averager();
@@ -138,7 +140,7 @@ class RunwaySimulation
                      }
                      else
                      {
-                     //send arriving to runway
+                     //didn't crash so send arriving to runway
                      runwayOne.startUsingRunway('L');
                      }
                   }
