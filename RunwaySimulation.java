@@ -195,7 +195,7 @@ class RunwaySimulation
          
          System.out.println("Number of planes that came to runway for takeoff: " + leaving.getPlaneCount() );
          System.out.println("Number of planes that came to runway for landing: " + arriving.getPlaneCount() );
-         System.out.println("Number of planes that crashed: " + );
+         System.out.println("Number of planes that crashed: " + crashStack.size() );
          System.out.println("Average time waiting in takeoff queue: "+ );
          System.out.println("Average time waiting in landing queue:  "+ );     
          
