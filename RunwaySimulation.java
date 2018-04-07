@@ -87,7 +87,7 @@ class RunwaySimulation
          char status;
       
          //run sim
-         for (int loop=1; loop>simTime; loop++)             // main sim loop
+         for (int loop=1; loop<simTime; loop++)             // main sim loop
          {
             int timeNow=loop;
             // JE
@@ -128,7 +128,7 @@ class RunwaySimulation
                   pCrashed=false;
                   if (!landingQ.isEmpty())
                   {
-                     arriving=landingQ.remove();
+                     arriving=(Plane)landingQ.remove();
                      landAvg.addNumber( (double)(loop-arriving.getTime()) );
                      if (arriving.getTime() >= (loop-maxWait))
                      {
@@ -148,11 +148,12 @@ class RunwaySimulation
                {
                   if (!takeoffQ.isEmpty())
                   {
-                     leaving=takeoffQ.remove();
+                     leaving=(Plane)takeoffQ.remove();
                      takeoffAvg.addNumber( (double)(loop-leaving.getTime()) );
+                     runwayOne.startUsingRunway('T');
                   }
                   //send leaving to runway
-                  runwayOne.startUsingRunway('T');
+                  //runwayOne.startUsingRunway('T');
                }
             }
             else        //runway IS busy so do this block
@@ -199,7 +200,16 @@ class RunwaySimulation
       
       
       
-         //generate report after sim ends
+         
+         //generate report after sim ends JE
+         
+         System.out.println("Number of planes that came to runway for takeoff: " + takeoffPlaneTotal );
+         System.out.println("Number of planes that came to runway for landing: " + landPlaneTotal );
+         System.out.println("Number of planes that crashed: " + crashStack.size() );
+         System.out.println("Average time waiting in takeoff queue: " + takeoffAvg.average());
+         System.out.println("Average time waiting in landing queue:  " + landAvg.average());     
+         
+
          
          
          
