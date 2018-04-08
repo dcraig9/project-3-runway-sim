@@ -103,7 +103,7 @@ class RunwaySimulation
                leaving = new Plane(timeNow,'T');
                takeoffQ.add(leaving);
                takeoffPlaneTotal++;
-               System.out.println("Arrived for Takeoff : Plane# " + Integer.toString(leaving.getPlaneNo()));
+               System.out.println("\t Arrived for Takeoff : Plane# " + Integer.toString(leaving.getPlaneNo()));
                //eventStack.push(event);
             }
             
@@ -114,7 +114,7 @@ class RunwaySimulation
                arriving = new Plane(timeNow,'L');
                landingQ.add(arriving);
                landPlaneTotal++;
-               System.out.println("Arrived for Landing : Plane# " + Integer.toString(arriving.getPlaneNo()));
+               System.out.println("\t Arrived for Landing : Plane# " + Integer.toString(arriving.getPlaneNo()));
                //eventStack.push(event);
             }
             
@@ -171,19 +171,20 @@ class RunwaySimulation
             status = runwayOne.kindOfOperation();
             // revised status output to use a switch statement   - DC
             // may need to look at math for the 'finishing' part
+            // **** need to move planes off runway after they land - JE  they are staying past finishing.
             switch(status)
             {
-               case 'T' :  System.out.print("Runway: Plane #" + leaving.getPlaneNo() + " is taking off.");
+               case 'T' :  System.out.print("\t Runway: Plane #" + leaving.getPlaneNo() + " is taking off.");
                            if( (loop - leaving.getTime()) == takeoffTime )
                               System.out.print("(finishing)");
                            System.out.println();
                            break;
-               case 'L' :  System.out.print("Runway: Plane #" + arriving.getPlaneNo() + " is landing.");
+               case 'L' :  System.out.print("\t Runway: Plane #" + arriving.getPlaneNo() + " is landing.");
                            if( (loop - arriving.getTime()) == landTime )
                               System.out.print("(finishing)");
                            System.out.println();
                            break;
-               case 'I' :  System.out.println("Runway: Idle");
+               case 'I' :  System.out.println("\t Runway: Idle");
                            break;
             }               
          
