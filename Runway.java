@@ -19,7 +19,10 @@ public class Runway
 
    public boolean isBusy() 
    {
-      return (runwayTimeLeft > 0);
+      if (runwayTimeLeft == 0)
+         return false;
+      else
+         return true;
    }
 
    public void reduceRemainingTime()
