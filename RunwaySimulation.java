@@ -24,7 +24,7 @@ class RunwaySimulation
       boolean done=false,event=false;
       boolean pCrashed=false;
       int simTime, takeoffTime,landTime, landArrival, takeoffArrival, maxWait,totalCrash;
-      int takeoffPlaneTotal,landPlaneTotal,startL=0,startT=0;
+      int takeoffPlaneTotal,landPlaneTotal,startL,startT;
       double landingProb,takeoffProb;
       Scanner scan = new Scanner(System.in);
       String crash;
@@ -33,16 +33,21 @@ class RunwaySimulation
       
       while (!done)
       {
+         //initialize all counters
+         Plane.resetCount();
+         takeoffPlaneTotal=0;
+         landPlaneTotal=0;
+         startL=0;
+         startT=0;
          // landingQ, takeoffQ, crash stack
       
          LinkedQueue<Plane> landingQ = new LinkedQueue<Plane>();
          LinkedQueue<Plane> takeoffQ = new LinkedQueue<Plane>();
          LinkedStack<String> crashStack = new LinkedStack<String>(); //stores plane # and time of crash in a string
-                                                                     //formatted for printing at end of sim
-         LinkedStack<String> eventStack = new LinkedStack<String>(); //track events for activity report each minute
-      
+                                                                     //formatted for printing at end of sim      
       
          //get user to input sim parameters
+         System.out.println();
          System.out.println("Welcome to the Airport Sim Center!");
          System.out.println("We'll need to have you input the starting parameters for todays sim run before we start.");
          System.out.println("Please enter all values as positive integers that will be used to represent whole minutes.");
@@ -81,8 +86,7 @@ class RunwaySimulation
          Averager landAvg = new Averager();
          Averager takeoffAvg = new Averager();
          
-         takeoffPlaneTotal=0;
-         landPlaneTotal=0;
+
          //character for status JE
          char status;
          
@@ -210,9 +214,7 @@ class RunwaySimulation
                }
                              
             }
-            
-                        
-            
+                       
 
             if (!event)                               //nothing happening on runway this turn - DC
                System.out.println("\t Runway: Idle");              
@@ -224,6 +226,13 @@ class RunwaySimulation
             //runwayOne.reduceRemainingTime();
             
          } //end main sim loop
+         
+         //crash report
+         if (crashStack.size() > 0)
+         {
+            System.out.println();
+            System.out.println("Crashed Planes:");
+         }
       
          totalCrash=crashStack.size();
          while (!crashStack.isEmpty())
@@ -232,7 +241,7 @@ class RunwaySimulation
          }
          
          //generate report after sim ends JE
-         
+         System.out.println();
          System.out.println("Number of planes that came to runway for takeoff: " + takeoffPlaneTotal );
          System.out.println("Number of planes that came to runway for landing: " + landPlaneTotal );
          System.out.println("Number of planes that crashed: " + totalCrash );
@@ -240,10 +249,11 @@ class RunwaySimulation
          System.out.println("Average time waiting in landing queue:  " + landAvg.average());     
          
      
-         done=runAgain();
+         done=runAgain(); // ask user if they want to run another sim
    
       }// end while loop that repeats whole sim program
-   
+      System.out.println();
+      System.out.println("Thank you for using our Airport Simulator. Have a great day!");
    } //end main
    
    public static int getInt( )           // method to get an integer as input
@@ -254,8 +264,7 @@ class RunwaySimulation
       while(!valid)
       {
          try
-         {
-         
+         {         
             input=numScan.nextInt();
             if (input<=0) 
             {

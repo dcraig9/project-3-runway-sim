@@ -3,16 +3,23 @@ class Plane {
                // the plane number arrived to the queue 
                // should be in incrementing order
    private int time; //the time the plane arrived in queue
-   private char operation;  // the kind of operation the 					//plane is doing 'L" is  for landing
-                    // 'T' is for taking off 
+   private char operation;  // the kind of operation the 					
+                            //plane is doing 'L" is  for landing
+                            // 'T' is for taking off 
    private int planeNo;   // plane number
 
    public Plane( int aTime, char landingOrTakeOff)
-// operation  is the type of operation the plane is doing. // If landingOrTakeOff is 'L' it means the plane is landing // If landingOrTakeOff is 'T' it means Taking off. 
+   // operation  is the type of operation the plane is doing. 
+   // If landingOrTakeOff is 'L' it means the plane is landing 
+   // If landingOrTakeOff is 'T' it means Taking off. 
    {
       time = aTime;
       operation =  landingOrTakeOff;
       planeNo = ++planeCount;
+   }
+
+   public static void resetCount() {
+      planeCount=0;
    }
 
    public int getTime()  {
