@@ -4,8 +4,21 @@ public class Runway
    private  int timeForTakeoff;
    private int runwayTimeLeft; 
    private char operation;             
-// operation can be: I – Idle, L-Landing, T-takeoff
+      // operation can be: I – Idle, L-Landing, T-takeoff
 
+   /**
+   * Initialize a Runway with a specified amount of time for takeoff
+   *  and amount of time for landing.
+   * @param time_takeoff
+   *   the integer value of time (ex, minute) that the runway needs to use
+   *  for each takeoff
+   * @param time_landing
+   *   the integer value of time (ex, minute) that the runway needs to use
+   *  for each landing
+   * @postcondition
+   *   operation is set to I for Idle.
+   *   runwayTimeLeft counter set to zero.
+   **/   
    public Runway ( int time_takeoff, int time_landing)
    {
       timeForTakeoff=time_takeoff;
@@ -15,8 +28,15 @@ public class Runway
       operation='I';
    
    }
-//set the time for landing, time for takeoff, and the //operation to idle. 
 
+   /**
+   * Get the runway in use status from isBusy()
+   * @param - none
+   * @return
+   *   The return value is either true or false,
+   *   If the runway is in use by a plane - true.
+   *   If runway is idle - false.
+   **/   
    public boolean isBusy() 
    {
       if (runwayTimeLeft == 0)
@@ -25,6 +45,12 @@ public class Runway
          return true;
    }
 
+   /**
+   *  Reduce the remaining time of runwayTimeLeft
+   *  using reduceRemainingTime()
+   *  @param - none
+   *  @postcondition - runwayTimeLeft is reduced by one
+   **/
    public void reduceRemainingTime()
    {
       if(runwayTimeLeft > 0)
@@ -33,6 +59,15 @@ public class Runway
       }//end if statement
    }//end reduceRemainingTime method
 
+   /**
+   * Set the use condition for the runway and begin corresponding timer.
+   * @param - typeOfUse character is 'I' for idle
+   *           'T' for takeoff
+   *           'L' for landing
+   * @postcondition - 'I' sets runwayTimeLeft to zero
+   *                  'T' sets runwayTimeLeft to timeForTakeoff
+   *                  'L' sets runwayTimeLeft to timeForLanding
+   **/
    public void startUsingRunway(char typeOfUse)
    {
    
@@ -50,22 +85,22 @@ public class Runway
          
    
    }
-// if typeOfUse is 'T' - then the operation is take off  //and set the runway time left 
-// to the time it takes for takeoff.
-// if typeOfUse is 'L' - then the operation is landing and //set the runway time left 
-// to the time it takes for landing
-// if typrOfUse is ‘I’ – then the runway is idle, set the //runway time left to zero
 
+   /**
+   * Accessor method to Get the character representing the operational use of the Runway 
+   * @precondition -  if isBusy() returns false then no one is currently using the runway
+   *        therefore must be in the Idle state. If isBusy returns true, then
+   *        the runway is either being used for Landing or Takeoff by a plane.
+   * @param - none
+   * @return - returns the type of operation the runway is used for. 
+   *     returns  'L' if the runway is used for is landing. 
+   *     returns  'T' if  the runway is used for taking off. 
+   *     returns ‘I’, if the runway is idle 
+   **/
    public char kindOfOperation()
    {
       
       char status = ' ';
-
-      //if isBusy returns false then no one is currently using the runway
-
-      //therefore must be in the Idle state. If isBusy returns true, then
-
-      //the runway is either being used for Landing or Takeoff by a plane.
 
       if(!isBusy())
       {
@@ -77,9 +112,5 @@ public class Runway
       }//end else statement
       return status; 
    }  
-// returns the type of operation the runway is used for. 
-// returns  'L' if the runway is used for is landing. 
-// returns  'T' if  the runway is used for taking off. 
-// returns ‘I’, if the runway is idle 
 
 }//end Runway
