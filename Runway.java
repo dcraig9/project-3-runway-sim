@@ -1,10 +1,18 @@
+/********************************************************************************************
+* File: Runway.java
+*
+* Authors: Donald Craig and Joe Eckstein
+* Date: 04/11/2018
+*
+********************************************************************************************/
+
 public class Runway
 {
    private  int timeForLanding;
    private  int timeForTakeoff;
    private int runwayTimeLeft; 
    private char operation;             
-      // operation can be: I – Idle, L-Landing, T-takeoff
+      // operation can be: I - Idle, L-Landing, T-takeoff
 
    /**
    * Initialize a Runway with a specified amount of time for takeoff
@@ -69,8 +77,7 @@ public class Runway
    *                  'L' sets runwayTimeLeft to timeForLanding
    **/
    public void startUsingRunway(char typeOfUse)
-   {
-   
+   { 
       operation=typeOfUse;
       
       switch(typeOfUse)
@@ -82,8 +89,6 @@ public class Runway
          case  'L':  runwayTimeLeft=timeForLanding;
                      break;
       } 
-         
-   
    }
 
    /**
@@ -95,7 +100,7 @@ public class Runway
    * @return - returns the type of operation the runway is used for. 
    *     returns  'L' if the runway is used for is landing. 
    *     returns  'T' if  the runway is used for taking off. 
-   *     returns ‘I’, if the runway is idle 
+   *     returns  'I' if the runway is idle 
    **/
    public char kindOfOperation()
    {
